@@ -1,0 +1,20 @@
+// Это конфигурация Prisma для работы с локальной базой данных SQLite
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+// Модель для хранения истории сгенерированных QR-кодов
+model QRCode {
+  id        Int      @id @default(autoincrement())
+  sessionId String   // ID сессии пользователя (чтобы обойтись без регистрации)
+  type      String   // Тип (например, "url" или "text")
+  content   String   // Сама ссылка или текст
+  fgColor   String   // Цвет самого QR-кода
+  bgColor   String   // Цвет фона
+  createdAt DateTime @default(now()) // Дата создания
+}
